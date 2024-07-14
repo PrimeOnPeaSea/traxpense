@@ -1,113 +1,115 @@
+import Link from "next/link";
+import { FaWallet, FaChevronRight } from "react-icons/fa";
+import RetroGrid from "@/components/magicui/retro-grid";
+import ProfileButton from "@/components/global/profileButton";
+import { signIn, auth } from "@/auth";
+import { ModeToggle } from "@/components/mode-toggle";
+import { Footer } from "@/components/admin-panel/footer";
 import Image from "next/image";
 
-export default function Home() {
+export default async function Home() {
+  const session = await auth();
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">src/app/page.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:size-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+    <div className="flex flex-col min-h-screen">
+      <header className="z-[50] sticky top-0 w-full bg-background/95 border-b backdrop-blur-sm dark:bg-black/[0.6] border-border/40">
+        <div className="container h-14 flex items-center">
+          <Link
+            href="/"
+            className="flex justify-start items-center hover:opacity-85 transition-opacity duration-300"
           >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+            <FaWallet className="w-6 h-6 mr-3" />
+            <span className="font-bold">Traxpense</span>
+            <span className="sr-only">Traxpense</span>
+          </Link>
+          <nav className="ml-auto flex items-center gap-2">
+            <ModeToggle />
+            <ProfileButton />
+          </nav>
         </div>
-      </div>
+      </header>
+      <main className="min-h-[calc(100vh-57px-97px)] flex-1">
+        <div className="relative">
+          <div className="absolute top-0 z-[0] h-screen w-screen bg-white dark:bg-black bg-[radial-gradient(ellipse_20%_80%_at_50%_-20%,rgba(120,119,198,0.3),rgba(255,255,255,0))] dark:bg-[radial-gradient(ellipse_20%_80%_at_50%_-20%,rgba(120,119,198,0.3),rgba(0,0,0,0))]"></div>
+          <section className="relative max-w-full mx-auto z-1">
+            <RetroGrid />
 
-      <div className="relative z-[-1] flex place-items-center before:absolute before:h-[300px] before:w-full before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-full after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 sm:before:w-[480px] sm:after:w-[240px] before:lg:h-[360px]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
+            <div className="max-w-screen-xl z-10 mx-auto px-4 py-28 gap-12 text-gray-600 dark:text-gray-300 md:px-8">
+              <div className="space-y-5 max-w-3xl leading-0 lg:leading-5 mx-auto text-center">
+                <Link href="/dashboard">
+                  <h1 className="text-sm text-black/40 dark:text-gray-500 group font-geist mx-auto px-5 py-2 bg-gradient-to-tr from-zinc-900/5 via-gray-950/5 dark:from-zinc-300/5 dark:via-gray-400/5 to-transparent border-[2px] border-white/5 dark:border-gray-700/5 rounded-3xl w-fit">
+                    Manage your expenses now
+                    <FaChevronRight className="inline w-4 h-4 ml-2 group-hover:translate-x-1 duration-300" />
+                  </h1>
+                </Link>
 
-      <div className="mb-32 grid text-center lg:mb-0 lg:w-full lg:max-w-5xl lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Docs{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
+                <h2 className="text-4xl tracking-tighter font-geist bg-clip-text bg-[linear-gradient(180deg,_#FFF_0%,_rgba(255,_255,_255,_0.00)_202.08%)] text-black/90 dark:text-transparent mx-auto md:text-6xl dark:bg-[linear-gradient(180deg,_#FFF_0%,_rgba(255,_255,_255,_0.00)_202.08%)]">
+                  Managing your tasks made easy with{" "}
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-orange-500 dark:from-purple-400 dark:to-orange-300">
+                    Traxpense
+                  </span>
+                </h2>
 
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Learn{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Templates{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Explore starter templates for Next.js.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Deploy{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-balance text-sm opacity-50">
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+                <p className="max-w-2xl mx-auto text-gray-700 dark:text-gray-400">
+                  Traxpense is a simple and easy-to-use expense tracker that
+                  helps you manage your expenses and income. It&apos;s designed
+                  to help you keep track of your expenses and income, so you can
+                  stay on top of your finances.
+                </p>
+                <div className="items-center justify-center gap-x-3 space-y-3 sm:flex sm:space-y-0">
+                  <span className="relative inline-block overflow-hidden rounded-full p-[1.5px]">
+                    <span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)] dark:bg-[conic-gradient(from_90deg_at_50%_50%,#D1B3FF_0%,#2E2E98_50%,#D1B3FF_100%)]" />
+                    <div className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-gray-950 dark:bg-gray-800 text-xs font-medium text-gray-50 backdrop-blur-3xl">
+                      {session?.user ? (
+                        <Link
+                          href="/dashboard"
+                          className="inline-flex rounded-full text-center group items-center w-full justify-center bg-gradient-to-tr from-zinc-300/5 via-purple-400/20 to-transparent text-white dark:text-gray-200 border-input border-[1px] hover:bg-transparent/90 transition-colors sm:w-auto py-4 px-10"
+                        >
+                          Go to Dashboard
+                        </Link>
+                      ) : (
+                        <form
+                          action={async () => {
+                            "use server";
+                            await signIn("google", {
+                              redirectTo: "/dashboard",
+                            });
+                          }}
+                        >
+                          <button className="inline-flex rounded-full text-center group items-center w-full justify-center bg-gradient-to-tr from-zinc-300/5 via-purple-400/20 to-transparent text-white dark:text-gray-200 border-input border-[1px] hover:bg-transparent/90 transition-colors sm:w-auto py-4 px-10">
+                            Sign Up for Free
+                          </button>
+                        </form>
+                      )}
+                    </div>
+                  </span>
+                </div>
+              </div>
+              <div className="mt-32 mx-10 hidden dark:block">
+                <Image
+                  src="/screenshot.png"
+                  className="w-full shadow-lg rounded-lg border dark:border-gray-700 z-[1000]"
+                  alt="screenshot"
+                  priority
+                  width={1200}
+                  height={800}
+                />
+              </div>
+              <div className="mt-32 mx-10 dark:hidden">
+                <Image
+                  src="/screenshot2.png"
+                  className="w-full shadow-lg rounded-lg border dark:border-gray-700 z-[1000]"
+                  alt="screenshot"
+                  priority
+                  width={1200}
+                  height={800}
+                />
+              </div>
+            </div>
+          </section>
+        </div>
+      </main>
+      <Footer />
+    </div>
   );
 }
