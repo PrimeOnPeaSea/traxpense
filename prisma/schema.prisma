@@ -13,11 +13,11 @@ model User {
   email         String?         @unique
   image         String?
   accounts      Account[]
-  sessions      Session[]
-  expenses      expense[]
-  categories    category[]
-  budgets       budget[]
-  notifications notifications[]
+  session       Session[]
+  expenses      expense[]?
+  categories    category[]?
+  budgets       budget[]?
+  notifications notifications[]?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
