@@ -44,7 +44,7 @@ export default async function Home() {
                 </Link>
 
                 <h2 className="text-4xl tracking-tighter font-geist bg-clip-text bg-[linear-gradient(180deg,_#FFF_0%,_rgba(255,_255,_255,_0.00)_202.08%)] text-black/90 dark:text-transparent mx-auto md:text-6xl dark:bg-[linear-gradient(180deg,_#FFF_0%,_rgba(255,_255,_255,_0.00)_202.08%)]">
-                  Managing your tasks made easy with{" "}
+                  Managing your Expenses made easy with{" "}
                   <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-orange-500 dark:from-purple-400 dark:to-orange-300">
                     Traxpense
                   </span>
