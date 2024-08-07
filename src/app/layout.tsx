@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Open_Sans as FontSans } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/sonner";
+import { Analytics } from "@vercel/analytics/react";
 import { ThemeProvider } from "@/components/theme-provider";
 
 const fontSans = FontSans({
@@ -54,6 +55,7 @@ export default function RootLayout({
           {children}
           <Toaster />
         </ThemeProvider>
+        <Analytics />
       </body>
     </html>
   );
