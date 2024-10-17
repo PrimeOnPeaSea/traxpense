@@ -40,8 +40,12 @@ const formSchema = z.object({
   name: z.string({
     required_error: "Expense name is required",
   }),
-  amount: z.number({
-    required_error: "Amount is required",
+  amount: z.coerce
+  .number({
+    required_error: "Expense amount is required",
+  })
+  .positive({
+    message: "Expense amount must be positive",
   }),
   date: z.string({
     required_error: "Date is required",
@@ -51,6 +55,13 @@ const formSchema = z.object({
   }),
   notes: z.string({
     required_error: "Notes is required",
+  }),
+  tax: z.coerce
+  .number({
+    required_error: "Tax is required",
+  })
+  .positive({
+    message: "Tax must be positive",
   }),
 });
 
@@ -72,6 +83,7 @@ const EditExpense = ({
     defaultValues: {
       name: expense.find((cat) => cat.id === id)?.name,
       amount: expense.find((cat) => cat.id === id)?.amount,
+      tax: expense.find((cat) => cat.id === id)?.tax,
       date: new Date(expense.find((cat) => cat.id === id)?.date ?? "")
         .toISOString()
         .split("T")[0],
@@ -87,6 +99,7 @@ const EditExpense = ({
         values.name,
         values.amount,
         values.date,
+        values.tax,
         values.category,
         values.notes
       )) as Expense;
@@ -187,6 +200,7 @@ const EditExpense = ({
                 )}
               />
             </div>
+            <div className="flex gap-4">
             <FormField
               control={form.control}
               name="category"
@@ -217,6 +231,23 @@ const EditExpense = ({
                 </FormItem>
               )}
             />
+            <FormField
+              control={form.control}
+              name="tax"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Expense Tax</FormLabel>
+                  <FormControl>
+                    <Input type="number" placeholder="Expense Tax" {...field} />
+                  </FormControl>
+                  <FormDescription>
+                    Type the tax of the Expense you want to add.
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            </div>
             <Button type="submit">Submit</Button>
           </form>
         </Form>

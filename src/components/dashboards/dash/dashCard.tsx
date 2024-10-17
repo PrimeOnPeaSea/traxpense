@@ -24,7 +24,9 @@ const DashCard = ({ userData }: { userData: User }) => {
     .map((expense) => expense.amount)
     .reduce((a, b) => a + b, 0);
   const totalCategories = userData.categories.length;
-  const totalBudgets = userData.budgets.length;
+  const totalAmountSaved = expenses
+    .map((expense) => (expense.amount * expense.tax) / 100)
+    .reduce((a, b) => a + b, 0);
   const totalTransactions = expenses.length;
 
   const data01: DataItem[] = userData.categories.map((category) => ({
@@ -49,6 +51,16 @@ const DashCard = ({ userData }: { userData: User }) => {
     date: new Date(expense.date).toLocaleDateString("en-US"),
   }));
 
+  const data03: DataItem[] = expenses.map((expense) => ({
+    name: expense.name,
+    value: expense.amount,
+  }));
+
+  const data04: DataItem[] = expenses.map((expense) => ({
+    name: expense.name,
+    value: expense.amount - (expense.amount * expense.tax) / 100,
+  }));
+
   return (
     <Card className="w-full mt-5 min-h-[calc(100vh-210px)]">
       <CardHeader className="flex flex-row justify-between items-center">
@@ -65,8 +77,8 @@ const DashCard = ({ userData }: { userData: User }) => {
             <p className="text-2xl font-bold">{totalCategories}</p>
           </div>
           <div className="flex flex-col p-4 bg-primary-foreground rounded-lg border">
-            <h3 className="text-lg font-bold">Total Budgets</h3>
-            <p className="text-2xl font-bold">{totalBudgets}</p>
+            <h3 className="text-lg font-bold">Total Amount Saved</h3>
+            <p className="text-2xl font-bold">{totalAmountSaved}</p>
           </div>
           <div className="flex flex-col p-4 bg-primary-foreground rounded-lg border">
             <h3 className="text-lg font-bold">Total Transactions</h3>
@@ -76,15 +88,15 @@ const DashCard = ({ userData }: { userData: User }) => {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <Card>
             <CardHeader className="flex flex-row justify-between items-end">
-              <CardTitle>Expenses by Category</CardTitle>
+              <CardTitle>Expenses by Tax</CardTitle>
               <CardDescription className="text-xs">
-                Outer Circle: <span className="font-bold">Expenses</span>
+                Outer Circle: <span className="font-bold">Expenses - Tax</span>
                 <br />
-                Inner Circle: <span className="font-bold">Categories</span>
+                Inner Circle: <span className="font-bold">Expenses</span>
               </CardDescription>
             </CardHeader>
-            <CardContent className="p-0 overflow-visible">
-              <PieChartCard data01={data01} data02={data02} />
+            <CardContent className="overflow-visible">
+              <PieChartCard data01={data03} data02={data04} />
             </CardContent>
           </Card>
           <Card>
@@ -99,32 +111,47 @@ const DashCard = ({ userData }: { userData: User }) => {
             </CardContent>
           </Card>
         </div>
-        <div className="border rounded-lg overflow-y-scroll max-h-[300px]">
-          <div className="flex justify-between items-center border-b">
-            <h3 className="text-lg font-bold p-4">Recent Expenses</h3>
-          </div>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Expense Name</TableHead>
-                <TableHead>Expense Category</TableHead>
-                <TableHead>Expense Amount</TableHead>
-                <TableHead>Expense Date</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {expenses.map((expense) => (
-                <TableRow key={expense.id}>
-                  <TableCell>{expense.name}</TableCell>
-                  <TableCell>{expense.category.name}</TableCell>
-                  <TableCell>₹{expense.amount}</TableCell>
-                  <TableCell>
-                    {new Date(expense.date).toLocaleDateString("en-US")}
-                  </TableCell>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="border rounded-lg overflow-y-scroll max-h-[300px]">
+            <div className="flex justify-between items-center border-b">
+              <h3 className="text-lg font-bold p-4">Recent Expenses</h3>
+            </div>
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Expense Name</TableHead>
+                  <TableHead>Expense Category</TableHead>
+                  <TableHead>Expense Amount</TableHead>
+                  <TableHead>Expense Date</TableHead>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+              </TableHeader>
+              <TableBody>
+                {expenses.map((expense) => (
+                  <TableRow key={expense.id}>
+                    <TableCell>{expense.name}</TableCell>
+                    <TableCell>{expense.category.name}</TableCell>
+                    <TableCell>₹{expense.amount}</TableCell>
+                    <TableCell>
+                      {new Date(expense.date).toLocaleDateString("en-US")}
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </div>
+          <Card>
+            <CardHeader className="flex flex-row justify-between items-end">
+              <CardTitle>Expenses by Category</CardTitle>
+              <CardDescription className="text-xs">
+                Outer Circle: <span className="font-bold">Expenses</span>
+                <br />
+                Inner Circle: <span className="font-bold">Categories</span>
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="p-0 overflow-visible">
+              <PieChartCard data01={data01} data02={data02} />
+            </CardContent>
+          </Card>
         </div>
       </CardContent>
     </Card>

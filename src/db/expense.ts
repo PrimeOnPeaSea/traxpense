@@ -13,6 +13,7 @@ export async function getExpenses(userEmail: string) {
       id: true,
       name: true,
       amount: true,
+      tax: true,
       date: true,
       category: {
         select: {
@@ -29,6 +30,7 @@ export async function createExpense(
   name: string,
   amount: number,
   date: string,
+  tax: number,
   category: string,
   notes: string,
   userEmail: string
@@ -38,6 +40,7 @@ export async function createExpense(
       name,
       amount,
       date: new Date(date),
+      tax,
       category: {
         connect: {
           id: category,
@@ -55,6 +58,7 @@ export async function createExpense(
       name: true,
       amount: true,
       date: true,
+      tax: true,
       category: {
         select: {
           id: true,
@@ -71,6 +75,7 @@ export async function editExpense(
   name: string,
   amount: number,
   date: string,
+  tax: number,
   category: string,
   notes: string
 ) {
@@ -87,6 +92,7 @@ export async function editExpense(
           id: category,
         },
       },
+      tax,
       notes,
     },
     select: {
@@ -94,6 +100,7 @@ export async function editExpense(
       name: true,
       amount: true,
       date: true,
+      tax: true,
       category: {
         select: {
           id: true,

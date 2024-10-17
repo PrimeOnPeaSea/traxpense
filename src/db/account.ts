@@ -31,6 +31,7 @@ export async function getUser(userEmail: string) {
           id: true,
           name: true,
           amount: true,
+          tax: true,
           date: true,
           category: {
             select: {

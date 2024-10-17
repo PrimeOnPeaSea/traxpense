@@ -57,6 +57,13 @@ const formSchema = z.object({
   category: z.string({
     required_error: "Expense category is required",
   }),
+  tax: z.coerce
+    .number({
+      required_error: "Expense tax is required",
+    })
+    .positive({
+      message: "Expense tax must be positive",
+    }),
 });
 
 const AddExpense = ({
@@ -75,6 +82,7 @@ const AddExpense = ({
     defaultValues: {
       name: "",
       amount: 100,
+      tax: 0,
       date: new Date().toISOString().split("T")[0],
       notes: "",
       category: "",
@@ -87,6 +95,7 @@ const AddExpense = ({
         values.name,
         values.amount,
         values.date,
+        values.tax,
         values.category,
         values.notes,
         mail
@@ -190,7 +199,7 @@ const AddExpense = ({
                 )}
               />
             </div>
-            <FormField
+            <div className="flex gap-4"><FormField
               control={form.control}
               name="category"
               render={({ field }) => (
@@ -220,6 +229,27 @@ const AddExpense = ({
                 </FormItem>
               )}
             />
+            <FormField
+              control={form.control}
+              name="tax"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Expense Tax</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="number"
+                      placeholder="Expense Tax"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormDescription>
+                    Type the tax of the Expense you want to add.
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            </div>
             <Button type="submit">Submit</Button>
           </form>
         </Form>

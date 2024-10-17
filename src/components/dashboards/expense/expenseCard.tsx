@@ -43,6 +43,7 @@ const ExpenseCard = ({
                 <TableHead>Category</TableHead>
                 <TableHead>Notes</TableHead>
                 <TableHead className="text-center">Amount</TableHead>
+                <TableHead className="text-right">Without Tax</TableHead>
                 <TableHead className="text-right">Actions</TableHead>
               </TableRow>
             </TableHeader>
@@ -57,6 +58,9 @@ const ExpenseCard = ({
                   <TableCell>{expense.notes}</TableCell>
                   <TableCell className="text-center">
                     ₹{expense.amount}
+                  </TableCell>
+                  <TableCell className="text-right">
+                    ₹{expense.amount - (expense.amount * expense.tax) / 100}
                   </TableCell>
                   <TableCell className="flex gap-2 items-center justify-end">
                     <EditExpense

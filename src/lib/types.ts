@@ -13,6 +13,7 @@ export type Expense = {
   id: string;
   name: string;
   amount: number;
+  tax: number;
   date: Date;
   category: {
     id: string;
